@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Drawer Handle Calculator</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Handle Calc">
+  <link rel="apple-touch-icon" href="icon192.png">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header>
+    <h1>🧰 Drawer Handle Calculator</h1>
+    <p class="subtitle">Edge-to-hole distance for centred two-hole handles.</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Inputs</h2>
+      <div class="grid">
+        <label>
+          Drawer width (<span class="unit-label">mm</span>)
+          <input type="number" id="width" inputmode="decimal" step="any" placeholder="e.g., 752">
+        </label>
+        <label>
+          Handle hole spacing (<span class="unit-label">mm</span>)
+          <input type="number" id="spacing" inputmode="decimal" step="any" placeholder="e.g., 160">
+        </label>
+        <label>
+          Units
+          <select id="units">
+            <option value="mm" selected>Millimetres (mm)</option>
+            <option value="in">Inches (in)</option>
+          </select>
+        </label>
+        <label>
+          Precision
+          <select id="precision">
+            <option value="1">0.1</option>
+            <option value="2" selected>0.01</option>
+            <option value="0">1</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="notes muted">
+        <p>Formula (centred handle): <code>margin m = (W - S) / 2</code></p>
+        <p>Hole centres from left edge: <code>x₁ = W/2 - S/2</code>, <code>x₂ = W/2 + S/2</code></p>
+      </div>
+
+      <div class="actions">
+        <button id="calcBtn">Calculate</button>
+        <button id="resetBtn" class="secondary">Reset</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Results</h2>
+      <div id="results" class="results">
+        <p class="muted">Enter width & spacing and tap <strong>Calculate</strong>.</p>
+      </div>
+      <div class="actions">
+        <button id="copyBtn" class="secondary" disabled>Copy Summary</button>
+        <button id="pngBtn" class="secondary" disabled>Download Drill Strip (PNG)</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Tips</h2>
+      <ul>
+        <li>For a single knob, set spacing <code>S = 0</code> ⇒ hole at <code>W/2</code>.</li>
+        <li>Measure drawer width where the handle will sit (face can taper).</li>
+        <li>Use the PNG as a quick paper strip: align left edge, mark holes.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Install to Home Screen to use offline. No data leaves your device.</p>
+  </footer>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js');
+      });
+    }
+  </script>
+</body>
+</html>
